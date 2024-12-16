@@ -4,14 +4,19 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
+    // Instance of AnnualFlightScheduler to manage flights
     public static AnnualFlightScheduler afs;
+    // Scanner for user input
     private static Scanner sc; // Single scanner for input
 
     public static void main(String[] args) {
+        // Initialize the flight scheduler
         afs = new AnnualFlightScheduler();
-        sc = new Scanner(System.in); // Initialize the scanner
+        // Initialize the scanner
+        sc = new Scanner(System.in);
         int choice;
 
+        // Main loop for the flight booking system
         do {
             System.out.println("\nWelcome to Flight Booking System");
             System.out.print("""
@@ -25,6 +30,7 @@ public class Main {
                                                             
                     Enter your choice here:  """);
 
+             // Get user's choice with input validation
              try {
                  choice = sc.nextInt();
              }
@@ -36,6 +42,7 @@ public class Main {
             }
             sc.nextLine(); // Consume newline
 
+            // Process user's choice
             switch (choice) {
                 case 1: {
                     Main.SearchFlightForWeek();
@@ -71,7 +78,8 @@ public class Main {
         sc.close(); // Close scanner before exiting
     }
 
-     public static void EditTicketInformation(){
+    // Allows users to edit the passenger details
+    public static void EditTicketInformation(){
         System.out.print("Enter your current passport number: ");
         String passportNum = sc.nextLine();
 
@@ -90,6 +98,7 @@ public class Main {
         }
     }
 
+    // Handles the ticket booking process
     public static void BookTicket() {
 
         System.out.print("Enter the flight ID (format: Flight-<number>-<yyyy-MM-dd>): ");
@@ -111,7 +120,7 @@ public class Main {
         flight.bookFlight(passenger, flight);
     }
 
-
+    // Allows users to view their ticket status
       public static void ViewTicketStatus() {
         System.out.print("Please enter your passport number: ");
         String passportNum = sc.nextLine();
@@ -126,6 +135,7 @@ public class Main {
     }
 
 
+     // Handles the ticket cancellation process
     public static void CancelTicket(){
         System.out.print("Enter the flight ID: ");
         String flightID = sc.nextLine();
@@ -147,6 +157,7 @@ public class Main {
         }
     }
 
+     // Allows user to search flight by date
     public static void SearchFlightForWeek(){
         DateTimeFormatter formatter=DateTimeFormatter.ofPattern("yyyy-MM-dd");
         System.out.print("Enter a starting date: ");
