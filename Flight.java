@@ -3,12 +3,19 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Flight {
+    // Unique identifier for the flight
     String flightID;
+    // Maximum number of seats available on the flight
     public static final int DEFAULT_MAX_SEATS = 5;
+    // List of passengers with confirmed tickets
     ArrayList<Passenger> confirmedTicketList;
+    // Queue of passengers on the waiting list
     Queue<Passenger> waitingList;
+    // Indicates if the flight has available seats
     boolean vacancyStatus;
+    // Number of confirmed seats
     private int confirmedSeats;
+    // Number of empty seats
     private int emptySeats;
 
 
@@ -20,16 +27,17 @@ public class Flight {
         confirmedSeats = 0;
         emptySeats = DEFAULT_MAX_SEATS;
     }
-
+   // Checks if the flight is fully booked
     public boolean isFull() {
         return confirmedTicketList.size() >= DEFAULT_MAX_SEATS;
     }
 
-
+   // Updates the vacancy status of the flight
     public void updateVacancyStatus() {
         vacancyStatus = !isFull();
     }
 
+     // Books a flight for a passenger
      public void bookFlight(Passenger passenger, Flight flight) {
 
         Ticket bookingTicket = new Ticket(passenger, flight);
@@ -48,6 +56,7 @@ public class Flight {
         updateVacancyStatus();
     }
 
+    // Adds a passenger to the confirmed list
     public void addConfirmedPassenger(Passenger passenger) {
            if (!isFull()) {
                  confirmedTicketList.add(passenger);
@@ -59,12 +68,12 @@ public class Flight {
            }
     }
 
-
+    // Adds a passenger to the waiting list
     public void addWaitlistedPassenger(Passenger passenger) {
         waitingList.add(passenger);
     }
 
-
+    // Processes the waiting list by moving passengers to the confirmed list if seats are available
     public void processWaitlist() {
        while (!isFull() && !waitingList.isEmpty()) {
            Passenger nextPassenger = waitingList.poll();
@@ -72,6 +81,7 @@ public class Flight {
         }
     }
 
+    // Cancels a ticket for a passenger
     public boolean cancelTicket(Passenger passenger){
        // Search all the tickets of this passenger on this flight
         Ticket ticketToBeRemoved = null;
@@ -110,7 +120,7 @@ public class Flight {
         }
     }
 
-
+   // Updates ticket statuses based on passenger's list
     public void updateTicketStatuses() {
         for (Passenger p : confirmedTicketList) {
             for (Ticket t : p.getTickets()) {
@@ -129,7 +139,7 @@ public class Flight {
         }
     }
 
-
+   // Sets the number of confirmed seats with validation
     public void setConfirmedSeats(int confirmedSeats) {
         if (confirmedSeats < 0 || confirmedSeats > DEFAULT_MAX_SEATS) {
             System.err.println("Invalid confirmed seats value. Adjusting to default.");
@@ -139,7 +149,7 @@ public class Flight {
         this.emptySeats = DEFAULT_MAX_SEATS - confirmedSeats;
     }
 
-
+    // Sets the number of empty seats with validation
     public void setEmptySeats(int emptySeats) {
         if (emptySeats < 0 || emptySeats > DEFAULT_MAX_SEATS) {
             throw new IllegalArgumentException("Invalid empty seats value.");
@@ -148,23 +158,24 @@ public class Flight {
         this.confirmedSeats = DEFAULT_MAX_SEATS - emptySeats;
     }
 
-
+   // Returns the number of confirmed seats
     public int getConfirmedSeats() {
         return confirmedSeats;
     }
 
-
+    // Returns the number of empty seats
     public int getEmptySeats() {
         return emptySeats;
     }
 
-
+   // Returns the number of passengers on the waiting list
     public int getWaitlistCount() {
         return waitingList.size();
     }
 
 
     @Override
+    // Returns a string representation of the flight
     public String toString() {
         return "\nFlight ID: " + this.flightID +
                 "\nTotal seat available: " + DEFAULT_MAX_SEATS +
