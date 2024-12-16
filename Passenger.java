@@ -3,46 +3,51 @@ import java.util.List;
 import java.util.Objects;
 
 public class Passenger {
-
+    // Unique identifier for the passenger
     private String passportNum;
+    // Name of the passenger
     private String name;
+    // List to store all the tickets for this passenger
     private ArrayList<Ticket> ticketsBucket;
 
+    // Constructor to create a new passenger
     public Passenger(String passportNum, String name){
         this.passportNum = passportNum;
         this.name = name;
         ticketsBucket = new ArrayList<>();
     }
 
-
+    // Returns the name of the passenger
     public String getName() {
         return name;
     }
 
-
+    // Returns the passport number of the passenger
     public String getPassportNum() {
         return passportNum;
     }
 
+    // Sets the name of the passenger
     public void setName(String name) {
         this.name = name;
     }
 
-
+    // Sets the passport number of the passenger
     public void setPassportNum(String passportNum) {
         this.passportNum = passportNum;
     }
 
-
-  public void addTicketToBucket(Ticket ticket) {
+    // Adds a ticket to the passenger's ticket bucket
+    public void addTicketToBucket(Ticket ticket) {
         ticketsBucket.add(ticket);
     }
 
-
+    // Returns the list of tickets for the passenger
     public List<Ticket> getTickets() {
         return ticketsBucket;
     }
 
+     // Displays the ticket status for the passenger
     public void viewTicketStatus(){
 
         if (ticketsBucket.isEmpty()) {
@@ -58,7 +63,7 @@ public class Passenger {
         }
     }
 
-
+     // Allows a passenger to edit their details
     public void editPassengerDetails(String newName, String newPassportNumber){
         if(newName != null && !newName.isEmpty()){
             this.name = newName;
@@ -69,6 +74,7 @@ public class Passenger {
         System.out.println("Passenger details updated successfully.");
     }
 
+    // Returns a string representation of the passenger
     @Override
     public String toString(){
         return "Passenger Information: "+
@@ -76,6 +82,7 @@ public class Passenger {
                 "\nPassport Number: "+this.passportNum;
     }
 
+   // Checks if two passengers are equal
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -84,6 +91,7 @@ public class Passenger {
         return Objects.equals(passportNum, passenger.passportNum);
     }
 
+    // Returns the hash code for the passenger
     @Override
     public int hashCode() {
         return Objects.hash(passportNum);
