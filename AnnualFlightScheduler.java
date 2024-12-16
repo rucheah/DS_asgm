@@ -9,10 +9,15 @@ import java.util.HashMap;
 import java.util.List;
 
 public class AnnualFlightScheduler {
+    // HashMap to store flights by date. Key: Date, Value: List of flights on that date
     static HashMap<LocalDate, ArrayList<Flight>> flightsByDate;
+    // HashMap to store passenger details. Key: Passport Number, Value: Passenger Object
     static HashMap<String, Passenger> passengers;
+    // HashMap to store ticket details. Key: Ticket ID, Value: Ticket object
     static HashMap<String, Ticket> tickets;  // Centralized ticket storage
+    // Date formatter to parse date strings
     static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    // CSV file name
     private static final String FILE_NAME = "C:\\Users\\ruche\\OneDrive\\Documents\\flights.csv";
     // Using an enum for status instead of strings would be ideal for the ticket
 
@@ -22,7 +27,7 @@ public class AnnualFlightScheduler {
         tickets = new HashMap<>();
         loadFlightsFromCsv();
     }
-
+   // Loads flight data from the CSV file
    private void loadFlightsFromCsv() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
@@ -105,16 +110,17 @@ public class AnnualFlightScheduler {
         }
     }
 
-
+   // Retrieves passenger details based on the passport number
     public Passenger getPassengerInfo(String passportNum) {
         return passengers.get(passportNum);
     }
-
+   // Retrieves ticket details based on the ticket ID
        public Ticket getTicketInfo(String ticketId) {
         return tickets.get(ticketId);
     }
 
-  private List<Passenger> parsePassengersList(String passengersStr) {
+    // Parses the passenger list from the string format.
+   private List<Passenger> parsePassengersList(String passengersStr) {
         List<Passenger> passengerList = new ArrayList<>();
         if (passengersStr != null && !passengersStr.trim().isEmpty()) {
             String[] passengersArray = passengersStr.split(";"); // Changed variable name to avoid confusion
@@ -141,6 +147,7 @@ public class AnnualFlightScheduler {
         }
         return passengerList;
     }
+    // Saves flight data to the CSV file
    public void saveFlightsToCsv() {
         try (FileWriter writer = new FileWriter(FILE_NAME)) {
             writer.write("Flight ID,Date,Status,Confirmed Passengers," +
@@ -165,6 +172,7 @@ public class AnnualFlightScheduler {
         }
     }
 
+    // process the flight based on flightID
     public static Flight processFlightID(String flightID) {
          String[] parts = flightID.split("-");
         int flightIndex = Integer.parseInt(parts[1]);
@@ -174,6 +182,7 @@ public class AnnualFlightScheduler {
         return flightsByDate.get(date).get(flightIndex);
     }
 
+    // Searches flights within a date range and displays
     public static void searchFlights(LocalDate date1, LocalDate date2) {
       System.out.println("\nFlight for the Weeks: ");
         System.out.println();
@@ -189,6 +198,7 @@ public class AnnualFlightScheduler {
         }
     }
 
+      // Converts a list of passengers to a string format
      private String getPassengerListString(ArrayList<Passenger> passengers) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < passengers.size(); i++) {
